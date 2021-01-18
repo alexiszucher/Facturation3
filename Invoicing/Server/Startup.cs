@@ -1,3 +1,4 @@
+using Invoicing.Server.Models;
 using Invoicing.Shared;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -23,7 +24,16 @@ namespace Invoicing.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<IBusinessData>(sp => new BusinessTestData());
+            services.AddSingleton<IBusinessData>(sp => 
+                new BusinessDataSQL(
+                        Configuration.GetConnectionString("invoice")
+                    )
+            );
+            services.AddSingleton<ICustomer>(sp =>
+                new CustomerSQL(
+                        Configuration.GetConnectionString("invoice")
+                    )
+            );
             services.AddControllersWithViews();
             services.AddRazorPages();
         }

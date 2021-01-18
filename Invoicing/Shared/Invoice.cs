@@ -9,13 +9,14 @@ namespace Invoicing.Shared
 {
     public class Invoice
     {
-        public Invoice(string reference, string customer, decimal amount, DateTime created) 
+        public Invoice(string reference, string customer, decimal amount, DateTime created, decimal paid) 
         {
             Reference = reference;
             Customer = customer;
             Amount = amount;
             Created = created;
             Expected = created + TimeSpan.FromDays(30);
+            Paid = paid;
         }
         [Required(ErrorMessage ="Invoice reference is required")]
         public string Reference { get; }
